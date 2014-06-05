@@ -39,6 +39,13 @@ const CGFloat kTableRowHeight = 48.f;
 @synthesize scrollViewHeightConstraint = _scrollViewHeightConstraint;
 @synthesize popUpButton = _popUpButton;
 
+-(void)dealloc
+{
+    self.contents = nil;
+    self.tableContents = nil;
+    [super dealloc];
+}
+
 - (id)init
 {
     self = [super initWithWindowNibName:@"InstallExtension"];
@@ -63,32 +70,6 @@ const CGFloat kTableRowHeight = 48.f;
         _tableContents = [_contents mutableCopy];
     }
     return self;
-}
-
-- (IBAction)popUpButtonAction:(id)sender
-{
-    NSString *title = [sender titleOfSelectedItem];
-    
-    [self.tableContents removeAllObjects];
-
-    if ([title isEqualToString:@"显示一个程序"])
-    {
-        [self.tableContents addObject:[self.contents objectAtIndex:0]];
-
-    }
-    else if ([title isEqualToString:@"显示两个程序"])
-    {
-        [self.tableContents addObject:[self.contents objectAtIndex:0]];
-        [self.tableContents addObject:[self.contents objectAtIndex:1]];
-    }
-    if ([title isEqualToString:@"显示三个程序"])
-    {
-        [self.tableContents addObject:[self.contents objectAtIndex:0]];
-        [self.tableContents addObject:[self.contents objectAtIndex:1]];
-        [self.tableContents addObject:[self.contents objectAtIndex:2]];
-    }
-    [self reloadData];
-
 }
 
 
@@ -154,6 +135,34 @@ const CGFloat kTableRowHeight = 48.f;
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
 {
     return NO;
+}
+
+#pragma mark - popUpButtonAction
+
+- (IBAction)popUpButtonAction:(id)sender
+{
+    NSString *title = [sender titleOfSelectedItem];
+    
+    [self.tableContents removeAllObjects];
+    
+    if ([title isEqualToString:@"显示一个程序"])
+    {
+        [self.tableContents addObject:[self.contents objectAtIndex:0]];
+        
+    }
+    else if ([title isEqualToString:@"显示两个程序"])
+    {
+        [self.tableContents addObject:[self.contents objectAtIndex:0]];
+        [self.tableContents addObject:[self.contents objectAtIndex:1]];
+    }
+    if ([title isEqualToString:@"显示三个程序"])
+    {
+        [self.tableContents addObject:[self.contents objectAtIndex:0]];
+        [self.tableContents addObject:[self.contents objectAtIndex:1]];
+        [self.tableContents addObject:[self.contents objectAtIndex:2]];
+    }
+    [self reloadData];
+    
 }
 
 
